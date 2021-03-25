@@ -3,6 +3,7 @@ import ComponentsBuilder from "./components.js"
 
 export default class TerminalController {
     #usersColors = new Map()
+
     constructor() {}
 
     #pickColor() {
@@ -23,7 +24,7 @@ export default class TerminalController {
     #onInputReceived(eventEmitter) {
         return function() {
             const message = this.getValue()
-            console.log(message)
+            eventEmitter.emit(constants.events.app.MESSAGE_SENT, message)
             this.clearValue()
         }
     }
@@ -82,21 +83,21 @@ export default class TerminalController {
         components.input.focus()
         components.screen.render()
 
-        setInterval(() => {
-            eventEmitter.emit(constants.events.app.MESSAGE_RECEIVED, { message: "hey", userName: "Bruno" })
-            eventEmitter.emit(constants.events.app.MESSAGE_RECEIVED, { message: "ho", userName: "Ellen" })
-            eventEmitter.emit(constants.events.app.MESSAGE_RECEIVED, { message: "oi", userName: "Julia" })
-            eventEmitter.emit(constants.events.app.MESSAGE_RECEIVED, { message: "olá", userName: "Evellyn" })
+        // setInterval(() => {
+        //     eventEmitter.emit(constants.events.app.MESSAGE_RECEIVED, { message: "hey", userName: "Bruno" })
+        //     eventEmitter.emit(constants.events.app.MESSAGE_RECEIVED, { message: "ho", userName: "Ellen" })
+        //     eventEmitter.emit(constants.events.app.MESSAGE_RECEIVED, { message: "oi", userName: "Julia" })
+        //     eventEmitter.emit(constants.events.app.MESSAGE_RECEIVED, { message: "olá", userName: "Evellyn" })
 
-            eventEmitter.emit(constants.events.app.ACTIVITY_LOG_UPDATED, 'Bruno join')
-            eventEmitter.emit(constants.events.app.ACTIVITY_LOG_UPDATED, 'Ellen left')
+        //     eventEmitter.emit(constants.events.app.ACTIVITY_LOG_UPDATED, 'Bruno join')
+        //     eventEmitter.emit(constants.events.app.ACTIVITY_LOG_UPDATED, 'Ellen left')
 
-            const users = ['Bruno']
-            eventEmitter.emit(constants.events.app.STATUS_UPDATED, users)
-            users.push('Ellen')
-            eventEmitter.emit(constants.events.app.STATUS_UPDATED, users)
-            users.push('Maria')
-            eventEmitter.emit(constants.events.app.STATUS_UPDATED, users)
-        }, 1000);
+        //     const users = ['Bruno']
+        //     eventEmitter.emit(constants.events.app.STATUS_UPDATED, users)
+        //     users.push('Ellen')
+        //     eventEmitter.emit(constants.events.app.STATUS_UPDATED, users)
+        //     users.push('Maria')
+        //     eventEmitter.emit(constants.events.app.STATUS_UPDATED, users)
+        // }, 1000);
     }
 }
